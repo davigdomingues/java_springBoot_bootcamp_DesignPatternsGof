@@ -52,8 +52,8 @@ public class GlobalExceptionHandler {
 
         return buildResponse(
                 HttpStatus.BAD_REQUEST,
-                "Validation Failed",
-                "One or more request fields failed validation",
+                "Falha de validação",
+                "Um ou mais campos da requisição falharam na validação",
                 request.getRequestURI(),
                 details
         );
@@ -69,8 +69,8 @@ public class GlobalExceptionHandler {
     ) {
         return buildResponse(
                 HttpStatus.BAD_REQUEST,
-                "Malformed Request",
-                "Invalid request payload or parameter value",
+                "Requisição malformada",
+                "Payload da requisição ou valor de parâmetro inválido",
                 request.getRequestURI(),
                 List.of(extractSafeMessage(ex))
         );
@@ -86,7 +86,7 @@ public class GlobalExceptionHandler {
     ) {
         return buildResponse(
                 HttpStatus.NOT_FOUND,
-                "Resource Not Found",
+                "Recurso não encontrado",
                 ex.getMessage(),
                 request.getRequestURI(),
                 List.of()
@@ -103,7 +103,7 @@ public class GlobalExceptionHandler {
     ) {
         return buildResponse(
                 HttpStatus.UNPROCESSABLE_ENTITY,
-                "Business Rule Violation",
+                "Violação de regra de negócio",
                 ex.getMessage(),
                 request.getRequestURI(),
                 List.of()
@@ -120,7 +120,7 @@ public class GlobalExceptionHandler {
     ) {
         return buildResponse(
                 HttpStatus.UNPROCESSABLE_ENTITY,
-                "Compliance Violation",
+                "Violação de compliance",
                 ex.getMessage(),
                 request.getRequestURI(),
                 ex.getViolations()
@@ -136,11 +136,11 @@ public class GlobalExceptionHandler {
             Exception ex,
             HttpServletRequest request
     ) {
-        log.error("Unexpected error while handling request uri={}", request.getRequestURI(), ex);
+        log.error("Erro inesperado ao processar requisição uri={}", request.getRequestURI(), ex);
         return buildResponse(
                 HttpStatus.INTERNAL_SERVER_ERROR,
-                "Internal Server Error",
-                "An unexpected internal error occurred",
+                "Erro interno do servidor",
+                "Ocorreu um erro interno inesperado",
                 request.getRequestURI(),
                 List.of()
         );
@@ -153,7 +153,7 @@ public class GlobalExceptionHandler {
     // Extrai a mensagem mais específica disponível sem expor stack trace ao consumidor da API
     private String extractSafeMessage(Exception ex) {
         Throwable root = ex.getCause() != null ? ex.getCause() : ex;
-        return root.getMessage() != null ? root.getMessage() : "Invalid request payload";
+        return root.getMessage() != null ? root.getMessage() : "Payload da requisição inválido";
     }
 
     private ResponseEntity<ApiErrorResponse> buildResponse(

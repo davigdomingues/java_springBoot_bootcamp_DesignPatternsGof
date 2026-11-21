@@ -26,8 +26,8 @@ public class ComplianceViolationException extends RuntimeException {
      * @throws NullPointerException quando {@code transactionCode} for nulo
      */
     public ComplianceViolationException(String transactionCode, List<String> violations) {
-        super("Payment blocked by compliance validation for transactionCode=" + transactionCode);
-        this.transactionCode = Objects.requireNonNull(transactionCode, "transactionCode must not be null");
+        super("Pagamento bloqueado pela validação de compliance para transactionCode=" + transactionCode);
+        this.transactionCode = Objects.requireNonNull(transactionCode, "transactionCode não pode ser nulo");
         // Cópia defensiva protege a lista de violações na serialização do payload HTTP 422
         this.violations = violations == null ? List.of() : List.copyOf(violations);
     }
