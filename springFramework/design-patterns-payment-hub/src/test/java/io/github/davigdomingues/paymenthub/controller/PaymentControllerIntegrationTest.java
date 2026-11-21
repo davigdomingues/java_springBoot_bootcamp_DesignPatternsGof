@@ -243,7 +243,7 @@ class PaymentControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(sanctionedPayload))
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(jsonPath("$.error").value("Compliance Violation"))
+                .andExpect(jsonPath("$.error").value("Violação de compliance"))
                 .andExpect(jsonPath("$.details[0]").value("SANCTIONED_DOCUMENT"))
                 .andReturn();
 
@@ -276,12 +276,12 @@ class PaymentControllerIntegrationTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidPayload))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error").value("Validation Failed"))
+                .andExpect(jsonPath("$.error").value("Falha de validação"))
                 .andExpect(jsonPath("$.details").isArray());
 
         mockMvc.perform(get("/api/v1/payments/TXN-NONEXISTENT-999999"))
                 .andExpect(status().isNotFound())
-                .andExpect(jsonPath("$.error").value("Resource Not Found"));
+                .andExpect(jsonPath("$.error").value("Recurso não encontrado"));
 
         mockMvc.perform(get("/v3/api-docs"))
                 .andExpect(status().isOk());

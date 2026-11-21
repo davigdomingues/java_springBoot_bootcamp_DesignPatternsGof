@@ -13,10 +13,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * Testes unitários das implementações de {@link PaymentStrategy} (PIX, Cartão de Crédito e Boleto).
+ * Testes unitários das implementações de {@link PaymentStrategy} (PIX, Cartão
+ * de Crédito e Boleto).
  *
- * Cobre regras específicas de validação ({@link BusinessRuleException}), cálculos de tarifas com
- * tetos/pisos por {@link CustomerTier} e definição do {@link PaymentStatus} inicial.
+ * Cobre regras específicas de validação ({@link BusinessRuleException}),
+ * cálculos de tarifas com
+ * tetos/pisos por {@link CustomerTier} e definição do {@link PaymentStatus}
+ * inicial.
  */
 class PaymentStrategyTest {
 
@@ -50,7 +53,7 @@ class PaymentStrategyTest {
 
         assertThatThrownBy(() -> pixStrategy.validateSpecificRules(withInstallments))
                 .isInstanceOf(BusinessRuleException.class)
-                .hasMessageContaining("installments");
+                .hasMessageContaining("parcelamento");
     }
 
     @Test
@@ -75,7 +78,7 @@ class PaymentStrategyTest {
         PaymentContext invalid13x = context(PaymentMethod.CREDIT_CARD, CustomerTier.STANDARD, "1000.00", 13, null);
         assertThatThrownBy(() -> cardStrategy.validateSpecificRules(invalid13x))
                 .isInstanceOf(BusinessRuleException.class)
-                .hasMessageContaining("between 1 and 12");
+                .hasMessageContaining("entre 1 e 12");
     }
 
     @Test
@@ -98,7 +101,7 @@ class PaymentStrategyTest {
         PaymentContext parceled = context(PaymentMethod.BOLETO, CustomerTier.STANDARD, "100.00", 2, null);
         assertThatThrownBy(() -> boletoStrategy.validateSpecificRules(parceled))
                 .isInstanceOf(BusinessRuleException.class)
-                .hasMessageContaining("installments");
+                .hasMessageContaining("parcelamento");
     }
 
     private PaymentContext context(
@@ -106,8 +109,7 @@ class PaymentStrategyTest {
             CustomerTier tier,
             String amount,
             int installments,
-            String pixKey
-    ) {
+            String pixKey) {
         return new PaymentContext(
                 "TXN-20261119-000001",
                 null,
@@ -118,7 +120,6 @@ class PaymentStrategyTest {
                 tier,
                 installments,
                 pixKey,
-                "Strategy unit test"
-        );
+                "Strategy unit test");
     }
 }

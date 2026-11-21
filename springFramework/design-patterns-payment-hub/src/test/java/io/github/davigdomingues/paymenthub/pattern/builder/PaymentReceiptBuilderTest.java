@@ -28,7 +28,7 @@ class PaymentReceiptBuilderTest {
                 .grossAmount(new BigDecimal("1000"))
                 .feeAmount(new BigDecimal("10.5"))
                 .status(PaymentStatus.APPROVED)
-                .settlementWindow("Instant (24/7 via SPI/Pix)")
+                .settlementWindow("Instantâneo (24/7 via SPI/Pix)")
                 .externalAuthorizationCode("AUTH-123456")
                 .clearingChannel("MAINFRAME_SPI")
                 .riskAssessment(RiskAssessment.clean())
