@@ -57,7 +57,7 @@ public final class PaymentReceiptBuilder {
      * @throws NullPointerException quando {@code existing} for nulo
      */
     public static PaymentReceiptBuilder from(PaymentExecutionResult existing) {
-        Objects.requireNonNull(existing, "existing result must not be null");
+        Objects.requireNonNull(existing, "O resultado existente não pode ser nulo");
         PaymentReceiptBuilder builder = new PaymentReceiptBuilder()
                 .transactionCode(existing.transactionCode())
                 .paymentMethod(existing.paymentMethod())
@@ -157,11 +157,11 @@ public final class PaymentReceiptBuilder {
      *     {@code grossAmount}, {@code feeAmount} ou {@code status} forem nulos
      */
     public PaymentExecutionResult build() {
-        Objects.requireNonNull(transactionCode, "transactionCode is required");
-        Objects.requireNonNull(paymentMethod, "paymentMethod is required");
-        Objects.requireNonNull(grossAmount, "grossAmount is required");
-        Objects.requireNonNull(feeAmount, "feeAmount is required");
-        Objects.requireNonNull(status, "status is required");
+        Objects.requireNonNull(transactionCode, "transactionCode é obrigatório");
+        Objects.requireNonNull(paymentMethod, "paymentMethod é obrigatório");
+        Objects.requireNonNull(grossAmount, "grossAmount é obrigatório");
+        Objects.requireNonNull(feeAmount, "feeAmount é obrigatório");
+        Objects.requireNonNull(status, "status é obrigatório");
 
         BigDecimal normalizedGross = grossAmount.setScale(2, RoundingMode.HALF_EVEN);
         BigDecimal normalizedFee = feeAmount.setScale(2, RoundingMode.HALF_EVEN);

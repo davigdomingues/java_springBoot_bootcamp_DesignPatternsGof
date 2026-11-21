@@ -41,7 +41,7 @@ public class CreditCardPaymentStrategy implements PaymentStrategy {
     @Override
     public void validateSpecificRules(PaymentContext context) {
         if (context.installments() < MIN_INSTALLMENTS || context.installments() > MAX_INSTALLMENTS) {
-            throw new BusinessRuleException("Credit card installments must be between 1 and 12");
+            throw new BusinessRuleException("O parcelamento no cartão de crédito deve estar entre 1 e 12");
         }
     }
 
@@ -77,6 +77,6 @@ public class CreditCardPaymentStrategy implements PaymentStrategy {
 
     @Override
     public String settlementWindowDescription() {
-        return "D+1 business day (card acquirer)";
+        return "D+1 dia útil (adquirente de cartão)";
     }
 }

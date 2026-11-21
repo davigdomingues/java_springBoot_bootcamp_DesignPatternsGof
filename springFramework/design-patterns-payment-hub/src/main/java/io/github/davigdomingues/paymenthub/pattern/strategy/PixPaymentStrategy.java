@@ -39,10 +39,10 @@ public class PixPaymentStrategy implements PaymentStrategy {
     @Override
     public void validateSpecificRules(PaymentContext context) {
         if (context.pixKey() == null || context.pixKey().isBlank()) {
-            throw new BusinessRuleException("PIX payments require a non-blank pixKey");
+            throw new BusinessRuleException("Pagamentos via PIX exigem uma pixKey não vazia");
         }
         if (context.installments() != 1) {
-            throw new BusinessRuleException("PIX payments do not support installments greater than 1");
+            throw new BusinessRuleException("Pagamentos via PIX não suportam parcelamento superior a 1");
         }
     }
 
@@ -70,6 +70,6 @@ public class PixPaymentStrategy implements PaymentStrategy {
 
     @Override
     public String settlementWindowDescription() {
-        return "Instant (24/7 via SPI/Pix)";
+        return "Instantâneo (24/7 via SPI/Pix)";
     }
 }

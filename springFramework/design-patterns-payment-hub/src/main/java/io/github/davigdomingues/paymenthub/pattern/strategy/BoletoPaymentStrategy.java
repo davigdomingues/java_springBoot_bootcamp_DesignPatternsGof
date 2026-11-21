@@ -38,10 +38,10 @@ public class BoletoPaymentStrategy implements PaymentStrategy {
     @Override
     public void validateSpecificRules(PaymentContext context) {
         if (context.installments() != 1) {
-            throw new BusinessRuleException("Boleto payments do not support installments greater than 1");
+            throw new BusinessRuleException("Pagamentos via boleto não suportam parcelamento superior a 1");
         }
         if (context.amount().compareTo(MINIMUM_BOLETO_AMOUNT) < 0) {
-            throw new BusinessRuleException("Boleto payments require a minimum amount of 10.00");
+            throw new BusinessRuleException("Pagamentos via boleto exigem valor mínimo de 10.00");
         }
     }
 
@@ -68,6 +68,6 @@ public class BoletoPaymentStrategy implements PaymentStrategy {
 
     @Override
     public String settlementWindowDescription() {
-        return "Up to 2 business days (CIP clearing)";
+        return "Até 2 dias úteis (compensação CIP)";
     }
 }

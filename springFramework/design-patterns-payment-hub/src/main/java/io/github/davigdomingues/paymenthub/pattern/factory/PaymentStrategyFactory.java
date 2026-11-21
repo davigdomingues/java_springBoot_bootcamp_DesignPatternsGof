@@ -35,17 +35,17 @@ public class PaymentStrategyFactory {
      * @throws IllegalStateException se duas estratégias reivindicarem o mesmo {@link PaymentMethod}
      */
     public PaymentStrategyFactory(List<PaymentStrategy> strategyBeans) {
-        Objects.requireNonNull(strategyBeans, "strategyBeans must not be null");
+        Objects.requireNonNull(strategyBeans, "strategyBeans não pode ser nulo");
         Map<PaymentMethod, PaymentStrategy> registry = new EnumMap<>(PaymentMethod.class);
         for (PaymentStrategy strategy : strategyBeans) {
             PaymentMethod method = Objects.requireNonNull(
                     strategy.supportedMethod(),
-                    "supportedMethod must not be null for " + strategy.getClass().getSimpleName()
+                    "supportedMethod não pode ser nulo para " + strategy.getClass().getSimpleName()
             );
             // Falha fail-fast no boot evita ambiguidade silenciosa entre estratégias concorrentes
             PaymentStrategy previous = registry.put(method, strategy);
             if (previous != null) {
-                throw new IllegalStateException("Duplicate PaymentStrategy registered for method: " + method);
+                throw new IllegalStateException("PaymentStrategy duplicada registrada para o método: " + method);
             }
         }
         this.strategies = Collections.unmodifiableMap(registry);
@@ -60,11 +60,11 @@ public class PaymentStrategyFactory {
      */
     public PaymentStrategy getStrategy(PaymentMethod method) {
         if (method == null) {
-            throw new UnsupportedPaymentMethodException("Payment method must not be null");
+            throw new UnsupportedPaymentMethodException("O método de pagamento não pode ser nulo");
         }
         PaymentStrategy strategy = strategies.get(method);
         if (strategy == null) {
-            throw new UnsupportedPaymentMethodException("No strategy registered for payment method: " + method);
+            throw new UnsupportedPaymentMethodException("Nenhuma estratégia registrada para o método de pagamento: " + method);
         }
         return strategy;
     }
