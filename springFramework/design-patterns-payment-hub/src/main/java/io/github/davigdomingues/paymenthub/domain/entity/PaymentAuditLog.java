@@ -69,10 +69,10 @@ public class PaymentAuditLog {
             String details,
             Instant recordedAt
     ) {
-        this.transactionCode = Objects.requireNonNull(transactionCode, "transactionCode must not be null");
-        this.eventType = Objects.requireNonNull(eventType, "eventType must not be null");
-        this.status = Objects.requireNonNull(status, "status must not be null");
-        this.riskLevel = Objects.requireNonNull(riskLevel, "riskLevel must not be null");
+        this.transactionCode = Objects.requireNonNull(transactionCode, "transactionCode não pode ser nulo");
+        this.eventType = Objects.requireNonNull(eventType, "eventType não pode ser nulo");
+        this.status = Objects.requireNonNull(status, "status não pode ser nulo");
+        this.riskLevel = Objects.requireNonNull(riskLevel, "riskLevel não pode ser nulo");
         this.details = details != null ? details : "";
         this.recordedAt = recordedAt != null ? recordedAt : Instant.now();
     }

@@ -63,10 +63,10 @@ public class NotificationLog {
             String message,
             Instant dispatchedAt
     ) {
-        this.transactionCode = Objects.requireNonNull(transactionCode, "transactionCode must not be null");
-        this.channel = Objects.requireNonNull(channel, "channel must not be null");
-        this.recipient = Objects.requireNonNull(recipient, "recipient must not be null");
-        this.subject = Objects.requireNonNull(subject, "subject must not be null");
+        this.transactionCode = Objects.requireNonNull(transactionCode, "transactionCode não pode ser nulo");
+        this.channel = Objects.requireNonNull(channel, "channel não pode ser nulo");
+        this.recipient = Objects.requireNonNull(recipient, "recipient não pode ser nulo");
+        this.subject = Objects.requireNonNull(subject, "subject não pode ser nulo");
         this.message = message != null ? message : "";
         this.dispatchedAt = dispatchedAt != null ? dispatchedAt : Instant.now();
     }

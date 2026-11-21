@@ -26,7 +26,7 @@ public record RiskAssessment(
      * @throws NullPointerException quando {@code riskLevel} for nulo
      */
     public RiskAssessment {
-        Objects.requireNonNull(riskLevel, "riskLevel must not be null");
+        Objects.requireNonNull(riskLevel, "riskLevel não pode ser nulo");
         // Cópia defensiva impede alteração externa do histórico de flags após avaliação
         flags = flags == null ? List.of() : List.copyOf(flags);
     }

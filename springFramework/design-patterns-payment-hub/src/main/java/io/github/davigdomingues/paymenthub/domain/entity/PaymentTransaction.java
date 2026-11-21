@@ -172,8 +172,8 @@ public class PaymentTransaction {
      * @throws NullPointerException quando {@code context} ou {@code result} forem nulos
      */
     public static PaymentTransaction fromExecutionResult(PaymentContext context, PaymentExecutionResult result) {
-        Objects.requireNonNull(context, "context must not be null");
-        Objects.requireNonNull(result, "result must not be null");
+        Objects.requireNonNull(context, "context não pode ser nulo");
+        Objects.requireNonNull(result, "result não pode ser nulo");
         return new PaymentTransaction(
                 context,
                 result.feeAmount(),
@@ -201,8 +201,8 @@ public class PaymentTransaction {
      * @throws NullPointerException quando {@code context} ou {@code riskAssessment} forem nulos
      */
     public static PaymentTransaction rejected(PaymentContext context, RiskAssessment riskAssessment) {
-        Objects.requireNonNull(context, "context must not be null");
-        Objects.requireNonNull(riskAssessment, "riskAssessment must not be null");
+        Objects.requireNonNull(context, "context não pode ser nulo");
+        Objects.requireNonNull(riskAssessment, "riskAssessment não pode ser nulo");
         BigDecimal zero = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN);
         return new PaymentTransaction(
                 context,
@@ -213,7 +213,7 @@ public class PaymentTransaction {
                 riskAssessment,
                 null,
                 "COMPLIANCE_GATE",
-                "Rejected before clearing",
+                "Rejeitado antes da compensação",
                 List.of(),
                 0L
         );

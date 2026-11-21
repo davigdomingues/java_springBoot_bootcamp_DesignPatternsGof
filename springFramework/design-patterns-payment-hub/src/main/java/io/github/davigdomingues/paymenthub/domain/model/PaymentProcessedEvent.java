@@ -39,11 +39,11 @@ public record PaymentProcessedEvent(
      *     {@code paymentMethod}, {@code status} ou {@code riskLevel} forem nulos
      */
     public PaymentProcessedEvent {
-        Objects.requireNonNull(transactionCode, "transactionCode must not be null");
-        Objects.requireNonNull(eventType, "eventType must not be null");
-        Objects.requireNonNull(paymentMethod, "paymentMethod must not be null");
-        Objects.requireNonNull(status, "status must not be null");
-        Objects.requireNonNull(riskLevel, "riskLevel must not be null");
+        Objects.requireNonNull(transactionCode, "transactionCode não pode ser nulo");
+        Objects.requireNonNull(eventType, "eventType não pode ser nulo");
+        Objects.requireNonNull(paymentMethod, "paymentMethod não pode ser nulo");
+        Objects.requireNonNull(status, "status não pode ser nulo");
+        Objects.requireNonNull(riskLevel, "riskLevel não pode ser nulo");
         occurredAt = occurredAt != null ? occurredAt : Instant.now();
     }
 }

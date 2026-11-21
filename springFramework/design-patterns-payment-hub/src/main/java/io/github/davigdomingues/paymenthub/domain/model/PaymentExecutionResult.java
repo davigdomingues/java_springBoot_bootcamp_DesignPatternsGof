@@ -39,11 +39,11 @@ public record PaymentExecutionResult(
      *     {@code grossAmount}, {@code feeAmount} ou {@code status} forem nulos
      */
     public PaymentExecutionResult {
-        Objects.requireNonNull(transactionCode, "transactionCode must not be null");
-        Objects.requireNonNull(paymentMethod, "paymentMethod must not be null");
-        Objects.requireNonNull(grossAmount, "grossAmount must not be null");
-        Objects.requireNonNull(feeAmount, "feeAmount must not be null");
-        Objects.requireNonNull(status, "status must not be null");
+        Objects.requireNonNull(transactionCode, "transactionCode não pode ser nulo");
+        Objects.requireNonNull(paymentMethod, "paymentMethod não pode ser nulo");
+        Objects.requireNonNull(grossAmount, "grossAmount não pode ser nulo");
+        Objects.requireNonNull(feeAmount, "feeAmount não pode ser nulo");
+        Objects.requireNonNull(status, "status não pode ser nulo");
         grossAmount = grossAmount.setScale(2, RoundingMode.HALF_EVEN);
         feeAmount = feeAmount.setScale(2, RoundingMode.HALF_EVEN);
         cashbackAmount = (cashbackAmount != null ? cashbackAmount : BigDecimal.ZERO)

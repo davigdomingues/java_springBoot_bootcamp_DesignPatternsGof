@@ -42,13 +42,13 @@ public record PaymentContext(
         transactionCode = requireNonBlank(transactionCode, "transactionCode");
         payerDocument = requireNonBlank(payerDocument, "payerDocument");
         payeeDocument = requireNonBlank(payeeDocument, "payeeDocument");
-        Objects.requireNonNull(amount, "amount must not be null");
+        Objects.requireNonNull(amount, "amount não pode ser nulo");
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("amount must be greater than zero");
+            throw new IllegalArgumentException("amount deve ser maior que zero");
         }
         // Normalização monetária bancária única para evitar drift entre Strategy, Adapter e persistência
         amount = amount.setScale(2, RoundingMode.HALF_EVEN);
-        Objects.requireNonNull(paymentMethod, "paymentMethod must not be null");
+        Objects.requireNonNull(paymentMethod, "paymentMethod não pode ser nulo");
         customerTier = customerTier != null ? customerTier : CustomerTier.STANDARD;
         installments = installments <= 0 ? 1 : installments;
         idempotencyKey = normalizeBlankToNull(idempotencyKey);
@@ -57,10 +57,10 @@ public record PaymentContext(
     }
 
     private static String requireNonBlank(String value, String fieldName) {
-        Objects.requireNonNull(value, fieldName + " must not be null");
+        Objects.requireNonNull(value, fieldName + " não pode ser nulo");
         String trimmed = value.trim();
         if (trimmed.isEmpty()) {
-            throw new IllegalArgumentException(fieldName + " must not be blank");
+            throw new IllegalArgumentException(fieldName + " não pode estar em branco");
         }
         return trimmed;
     }
