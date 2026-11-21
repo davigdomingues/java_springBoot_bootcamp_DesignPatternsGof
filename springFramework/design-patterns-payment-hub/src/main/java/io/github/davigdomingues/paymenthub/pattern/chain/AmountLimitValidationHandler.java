@@ -41,9 +41,9 @@ public class AmountLimitValidationHandler extends ComplianceValidationHandler {
             BigDecimal maxBoletoAmount,
             BigDecimal highValueThreshold
     ) {
-        this.maxGlobalAmount = Objects.requireNonNull(maxGlobalAmount, "maxGlobalAmount must not be null");
-        this.maxBoletoAmount = Objects.requireNonNull(maxBoletoAmount, "maxBoletoAmount must not be null");
-        this.highValueThreshold = Objects.requireNonNull(highValueThreshold, "highValueThreshold must not be null");
+        this.maxGlobalAmount = Objects.requireNonNull(maxGlobalAmount, "maxGlobalAmount não pode ser nulo");
+        this.maxBoletoAmount = Objects.requireNonNull(maxBoletoAmount, "maxBoletoAmount não pode ser nulo");
+        this.highValueThreshold = Objects.requireNonNull(highValueThreshold, "highValueThreshold não pode ser nulo");
     }
 
     @Override

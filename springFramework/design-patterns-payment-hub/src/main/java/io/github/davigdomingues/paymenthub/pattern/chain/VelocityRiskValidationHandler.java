@@ -47,7 +47,7 @@ public class VelocityRiskValidationHandler extends ComplianceValidationHandler {
             int blockThreshold) {
         this.transactionRepository = Objects.requireNonNull(
                 transactionRepository,
-                "transactionRepository must not be null");
+                "transactionRepository não pode ser nulo");
         this.windowMinutes = Math.max(1L, windowMinutes);
         this.alertThreshold = Math.max(1, alertThreshold);
         this.blockThreshold = Math.max(this.alertThreshold, blockThreshold);

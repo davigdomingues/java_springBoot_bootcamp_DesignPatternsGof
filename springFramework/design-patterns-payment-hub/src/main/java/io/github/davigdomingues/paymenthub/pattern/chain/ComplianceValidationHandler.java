@@ -27,7 +27,7 @@ public abstract class ComplianceValidationHandler {
      * @throws NullPointerException quando {@code next} for nulo
      */
     public ComplianceValidationHandler linkWith(ComplianceValidationHandler next) {
-        this.next = Objects.requireNonNull(next, "next handler must not be null");
+        this.next = Objects.requireNonNull(next, "next handler não pode ser nulo");
         return next;
     }
 
@@ -52,8 +52,8 @@ public abstract class ComplianceValidationHandler {
      * @throws NullPointerException quando {@code context} ou {@code current} forem nulos
      */
     public final RiskAssessment validate(PaymentContext context, RiskAssessment current) {
-        Objects.requireNonNull(context, "context must not be null");
-        Objects.requireNonNull(current, "current RiskAssessment must not be null");
+        Objects.requireNonNull(context, "context não pode ser nulo");
+        Objects.requireNonNull(current, "current RiskAssessment não pode ser nulo");
 
         RiskAssessment updated = evaluate(context, current);
         // Curto-circuito impede chamadas subsequentes (inclusive I/O de banco) após primeiro bloqueio
