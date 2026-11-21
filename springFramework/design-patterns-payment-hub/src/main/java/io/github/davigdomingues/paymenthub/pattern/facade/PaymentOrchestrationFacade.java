@@ -81,16 +81,16 @@ public class PaymentOrchestrationFacade {
             PaymentTransactionRepository transactionRepository,
             PaymentAuditLogRepository auditLogRepository,
             NotificationLogRepository notificationLogRepository) {
-        this.strategyFactory = Objects.requireNonNull(strategyFactory, "strategyFactory must not be null");
-        this.complianceChain = Objects.requireNonNull(complianceChain, "complianceChain must not be null");
-        this.executionPipeline = Objects.requireNonNull(executionPipeline, "executionPipeline must not be null");
-        this.settlementPort = Objects.requireNonNull(settlementPort, "settlementPort must not be null");
-        this.eventPublisher = Objects.requireNonNull(eventPublisher, "eventPublisher must not be null");
+        this.strategyFactory = Objects.requireNonNull(strategyFactory, "strategyFactory não pode ser nulo");
+        this.complianceChain = Objects.requireNonNull(complianceChain, "complianceChain não pode ser nulo");
+        this.executionPipeline = Objects.requireNonNull(executionPipeline, "executionPipeline não pode ser nulo");
+        this.settlementPort = Objects.requireNonNull(settlementPort, "settlementPort não pode ser nulo");
+        this.eventPublisher = Objects.requireNonNull(eventPublisher, "eventPublisher não pode ser nulo");
         this.transactionRepository = Objects.requireNonNull(transactionRepository,
-                "transactionRepository must not be null");
-        this.auditLogRepository = Objects.requireNonNull(auditLogRepository, "auditLogRepository must not be null");
+                "transactionRepository não pode ser nulo");
+        this.auditLogRepository = Objects.requireNonNull(auditLogRepository, "auditLogRepository não pode ser nulo");
         this.notificationLogRepository = Objects.requireNonNull(notificationLogRepository,
-                "notificationLogRepository must not be null");
+                "notificationLogRepository não pode ser nulo");
     }
 
     /**
@@ -115,7 +115,7 @@ public class PaymentOrchestrationFacade {
      */
     @Transactional(noRollbackFor = ComplianceViolationException.class)
     public PaymentResponse processPayment(CreatePaymentRequest request) {
-        Objects.requireNonNull(request, "request must not be null");
+        Objects.requireNonNull(request, "request não pode ser nulo");
 
         // Curto-circuito de idempotência antes do Singleton evita desperdício de sequência e dupla cobrança
         String normalizedIdempotencyKey = normalizeBlankToNull(request.idempotencyKey());
@@ -141,7 +141,7 @@ public class PaymentOrchestrationFacade {
             publishEvent(
                     rejected,
                     EVENT_PAYMENT_REJECTED,
-                    "Blocked by compliance rules: " + String.join(", ", riskAssessment.flags()));
+                    "Bloqueado pelas regras de compliance: " + String.join(", ", riskAssessment.flags()));
             throw new ComplianceViolationException(rejected.getTransactionCode(), riskAssessment.flags());
         }
 
@@ -152,7 +152,7 @@ public class PaymentOrchestrationFacade {
         publishEvent(
                 saved,
                 EVENT_PAYMENT_PROCESSED,
-                "Settled via " + saved.getClearingChannel() + " auth=" + saved.getExternalAuthorizationCode());
+                "Liquidado via " + saved.getClearingChannel() + " auth=" + saved.getExternalAuthorizationCode());
 
         return PaymentResponse.fromEntity(saved);
     }
@@ -170,7 +170,7 @@ public class PaymentOrchestrationFacade {
      */
     @Transactional(readOnly = true)
     public PaymentSimulationResponse simulatePayment(CreatePaymentRequest request) {
-        Objects.requireNonNull(request, "request must not be null");
+        Objects.requireNonNull(request, "request não pode ser nulo");
         // Código sintético evita avançar o contador monotônico do Singleton em simulações
         PaymentContext context = buildContext(SIMULATION_CODE, null, request);
 
@@ -254,7 +254,7 @@ public class PaymentOrchestrationFacade {
         if (transaction.getStatus() != PaymentStatus.APPROVED
                 && transaction.getStatus() != PaymentStatus.PENDING_SETTLEMENT) {
             throw new BusinessRuleException(
-                    "Only APPROVED or PENDING_SETTLEMENT transactions can be refunded. Current status: "
+                    "Apenas transações APPROVED ou PENDING_SETTLEMENT podem ser estornadas. Status atual: "
                             + transaction.getStatus());
         }
 
@@ -268,7 +268,7 @@ public class PaymentOrchestrationFacade {
         publishEvent(
                 updated,
                 EVENT_PAYMENT_REFUNDED,
-                "Refunded via " + refundResponse.clearingChannel() + " reversalAuth="
+                "Estornado via " + refundResponse.clearingChannel() + " reversalAuth="
                         + refundResponse.authorizationCode());
 
         return PaymentResponse.fromEntity(updated);
@@ -326,7 +326,7 @@ public class PaymentOrchestrationFacade {
     private PaymentTransaction findTransactionOrThrow(String transactionCode) {
         return transactionRepository.findByTransactionCode(transactionCode)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Payment transaction not found for code: " + transactionCode));
+                        "Transação de pagamento não encontrada para o código: " + transactionCode));
     }
 
     private void ensureTransactionExists(String transactionCode) {

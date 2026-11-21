@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/api/v1/metrics")
-@Tag(name = "Metrics", description = "Métricas agregadas em tempo real pelo Observer")
+@Tag(name = "Métricas", description = "Métricas agregadas em tempo real pelo Observer")
 public class MetricsController {
 
     private final MetricsCollectorObserver metricsCollectorObserver;
@@ -31,12 +31,12 @@ public class MetricsController {
     public MetricsController(MetricsCollectorObserver metricsCollectorObserver) {
         this.metricsCollectorObserver = Objects.requireNonNull(
                 metricsCollectorObserver,
-                "metricsCollectorObserver must not be null"
+                "metricsCollectorObserver não pode ser nulo"
         );
     }
 
     @GetMapping("/summary")
-    @Operation(summary = "Get aggregated payment metrics summary")
+    @Operation(summary = "Obter resumo agregado das métricas de pagamento")
     public ResponseEntity<MetricsSummaryResponse> getSummary() {
         return ResponseEntity.ok(metricsCollectorObserver.getSummary());
     }

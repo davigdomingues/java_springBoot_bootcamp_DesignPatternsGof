@@ -32,7 +32,7 @@ public class OpenApiConfig {
                                 .name("Davi Gabriel Domingues")
                                 .url("https://github.com/davigdomingues"))
                         .license(new License()
-                                .name("MIT License")
+                                .name("Licença MIT")
                                 .url("https://opensource.org/licenses/MIT")));
     }
 }

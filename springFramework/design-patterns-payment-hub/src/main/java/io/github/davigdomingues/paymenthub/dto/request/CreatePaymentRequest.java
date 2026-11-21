@@ -21,33 +21,33 @@ import java.math.BigDecimal;
  * de {@code PaymentStrategy} e compliance (HTTP {@code 422}).
  */
 public record CreatePaymentRequest(
-        @NotBlank(message = "payerDocument must not be blank")
-        @Pattern(regexp = "\\d{11}|\\d{14}", message = "payerDocument must be an 11-digit CPF or 14-digit CNPJ")
+        @NotBlank(message = "payerDocument não pode estar em branco")
+        @Pattern(regexp = "\\d{11}|\\d{14}", message = "payerDocument deve ser um CPF de 11 dígitos ou CNPJ de 14 dígitos")
         String payerDocument,
 
-        @NotBlank(message = "payeeDocument must not be blank")
-        @Pattern(regexp = "\\d{11}|\\d{14}", message = "payeeDocument must be an 11-digit CPF or 14-digit CNPJ")
+        @NotBlank(message = "payeeDocument não pode estar em branco")
+        @Pattern(regexp = "\\d{11}|\\d{14}", message = "payeeDocument deve ser um CPF de 11 dígitos ou CNPJ de 14 dígitos")
         String payeeDocument,
 
-        @NotNull(message = "amount must not be null")
-        @DecimalMin(value = "0.01", message = "amount must be at least 0.01")
+        @NotNull(message = "amount não pode ser nulo")
+        @DecimalMin(value = "0.01", message = "amount deve ser no mínimo 0.01")
         BigDecimal amount,
 
-        @NotNull(message = "paymentMethod must not be null")
+        @NotNull(message = "paymentMethod não pode ser nulo")
         PaymentMethod paymentMethod,
 
         CustomerTier customerTier,
 
-        @Min(value = 1, message = "installments must be at least 1")
-        @Max(value = 12, message = "installments must not exceed 12")
+        @Min(value = 1, message = "installments deve ser no mínimo 1")
+        @Max(value = 12, message = "installments não pode exceder 12")
         Integer installments,
 
         String pixKey,
 
-        @Size(max = 100, message = "idempotencyKey must not exceed 100 characters")
+        @Size(max = 100, message = "idempotencyKey não pode exceder 100 caracteres")
         String idempotencyKey,
 
-        @Size(max = 255, message = "description must not exceed 255 characters")
+        @Size(max = 255, message = "description não pode exceder 255 caracteres")
         String description
 ) {
     /**

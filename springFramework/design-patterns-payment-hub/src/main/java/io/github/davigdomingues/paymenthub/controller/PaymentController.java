@@ -41,7 +41,7 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/api/v1/payments")
-@Tag(name = "Payments", description = "Orquestração e consulta de pagamentos via Facade")
+@Tag(name = "Pagamentos", description = "Orquestração e consulta de pagamentos via Facade")
 public class PaymentController {
 
     private final PaymentOrchestrationFacade paymentFacade;
@@ -50,24 +50,24 @@ public class PaymentController {
      * @throws NullPointerException quando {@code paymentFacade} for nulo
      */
     public PaymentController(PaymentOrchestrationFacade paymentFacade) {
-        this.paymentFacade = Objects.requireNonNull(paymentFacade, "paymentFacade must not be null");
+        this.paymentFacade = Objects.requireNonNull(paymentFacade, "paymentFacade não pode ser nulo");
     }
 
     @PostMapping
     @Operation(
-            summary = "Process a payment transaction",
+            summary = "Processar uma transação de pagamento",
             description = "Executa validação estratégica, análise de compliance, liquidação legada, cashback, telemetria e observadores."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "201", description = "Payment processed or retrieved by idempotency key"),
+            @ApiResponse(responseCode = "201", description = "Pagamento processado ou recuperado por chave de idempotência"),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Validation or malformed payload error",
+                    description = "Erro de validação ou payload malformado",
                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))
             ),
             @ApiResponse(
                     responseCode = "422",
-                    description = "Business rule or compliance violation",
+                    description = "Violação de regra de negócio ou de compliance",
                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))
             )
     })
@@ -78,19 +78,19 @@ public class PaymentController {
 
     @PostMapping("/simulate")
     @Operation(
-            summary = "Simulate payment fees, cashback and risk assessment",
+            summary = "Simular tarifas, cashback e análise de risco do pagamento",
             description = "Executa cálculos de Strategy, cashback e Chain of Responsibility sem persistir nem liquidar."
     )
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Simulation calculated successfully"),
+            @ApiResponse(responseCode = "200", description = "Simulação calculada com sucesso"),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Validation error",
+                    description = "Erro de validação",
                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))
             ),
             @ApiResponse(
                     responseCode = "422",
-                    description = "Business rule violation",
+                    description = "Violação de regra de negócio",
                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))
             )
     })
@@ -99,7 +99,7 @@ public class PaymentController {
     }
 
     @GetMapping
-    @Operation(summary = "List payment transactions with optional filters")
+    @Operation(summary = "Listar transações de pagamento com filtros opcionais")
     public ResponseEntity<List<PaymentResponse>> listPayments(
             @RequestParam(required = false) PaymentMethod method,
             @RequestParam(required = false) PaymentStatus status
@@ -108,12 +108,12 @@ public class PaymentController {
     }
 
     @GetMapping("/{transactionCode}")
-    @Operation(summary = "Get a payment transaction by its unique code")
+    @Operation(summary = "Consultar uma transação de pagamento pelo código único")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Transaction found"),
+            @ApiResponse(responseCode = "200", description = "Transação encontrada"),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Transaction not found",
+                    description = "Transação não encontrada",
                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))
             )
     })
@@ -122,17 +122,17 @@ public class PaymentController {
     }
 
     @PostMapping("/{transactionCode}/refund")
-    @Operation(summary = "Refund an approved or pending settlement payment")
+    @Operation(summary = "Estornar um pagamento aprovado ou pendente de liquidação")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Payment refunded successfully"),
+            @ApiResponse(responseCode = "200", description = "Pagamento estornado com sucesso"),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Transaction not found",
+                    description = "Transação não encontrada",
                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))
             ),
             @ApiResponse(
                     responseCode = "422",
-                    description = "Transaction status is not eligible for refund",
+                    description = "Status da transação não é elegível para estorno",
                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))
             )
     })
@@ -141,12 +141,12 @@ public class PaymentController {
     }
 
     @GetMapping("/{transactionCode}/audit")
-    @Operation(summary = "Get the audit log trail for a transaction")
+    @Operation(summary = "Consultar a trilha de auditoria de uma transação")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Audit logs retrieved"),
+            @ApiResponse(responseCode = "200", description = "Registros de auditoria recuperados"),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Transaction not found",
+                    description = "Transação não encontrada",
                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))
             )
     })
@@ -155,12 +155,12 @@ public class PaymentController {
     }
 
     @GetMapping("/{transactionCode}/notifications")
-    @Operation(summary = "Get dispatched notifications for a transaction")
+    @Operation(summary = "Consultar notificações disparadas para uma transação")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "Notification logs retrieved"),
+            @ApiResponse(responseCode = "200", description = "Registros de notificação recuperados"),
             @ApiResponse(
                     responseCode = "404",
-                    description = "Transaction not found",
+                    description = "Transação não encontrada",
                     content = @Content(schema = @Schema(implementation = ApiErrorResponse.class))
             )
     })
