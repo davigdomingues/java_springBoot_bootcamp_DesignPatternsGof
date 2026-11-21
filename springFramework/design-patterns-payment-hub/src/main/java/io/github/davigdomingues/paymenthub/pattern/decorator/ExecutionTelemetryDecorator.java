@@ -39,7 +39,7 @@ public class ExecutionTelemetryDecorator extends AbstractPaymentPipelineDecorato
         long elapsedMs = Math.max(0L, TimeUnit.NANOSECONDS.toMillis(System.nanoTime() - startedAtNanos));
 
         log.debug(
-                "Payment pipeline executed transactionCode={} method={} elapsedMs={}",
+                "Pipeline de pagamento executado transactionCode={} method={} elapsedMs={}",
                 context.transactionCode(),
                 context.paymentMethod(),
                 elapsedMs

@@ -41,7 +41,7 @@ public class PaymentEventPublisher {
      * @throws NullPointerException quando {@code observer} for nulo
      */
     public void subscribe(PaymentEventObserver observer) {
-        Objects.requireNonNull(observer, "observer must not be null");
+        Objects.requireNonNull(observer, "observer não pode ser nulo");
         observers.addIfAbsent(observer);
     }
 
@@ -63,14 +63,14 @@ public class PaymentEventPublisher {
      * @throws NullPointerException quando {@code event} for nulo
      */
     public void notifyObservers(PaymentProcessedEvent event) {
-        Objects.requireNonNull(event, "event must not be null");
+        Objects.requireNonNull(event, "event não pode ser nulo");
         for (PaymentEventObserver observer : observers) {
             try {
                 observer.onPaymentEvent(event);
             } catch (RuntimeException ex) {
                 // Isolamento de falha: erro em um assinante é logado sem abortar auditoria nem métricas
                 log.error(
-                        "Observer failure observer={} transactionCode={} eventType={}",
+                        "Falha no observador observer={} transactionCode={} eventType={}",
                         observer.observerName(),
                         event.transactionCode(),
                         event.eventType(),

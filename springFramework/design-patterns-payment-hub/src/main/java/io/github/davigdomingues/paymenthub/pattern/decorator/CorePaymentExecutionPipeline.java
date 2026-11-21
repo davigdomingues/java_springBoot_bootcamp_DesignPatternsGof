@@ -36,8 +36,8 @@ public class CorePaymentExecutionPipeline implements PaymentExecutionPipeline {
     public CorePaymentExecutionPipeline(
             PaymentStrategyFactory strategyFactory,
             ExternalSettlementPort settlementPort) {
-        this.strategyFactory = Objects.requireNonNull(strategyFactory, "strategyFactory must not be null");
-        this.settlementPort = Objects.requireNonNull(settlementPort, "settlementPort must not be null");
+        this.strategyFactory = Objects.requireNonNull(strategyFactory, "strategyFactory não pode ser nulo");
+        this.settlementPort = Objects.requireNonNull(settlementPort, "settlementPort não pode ser nulo");
     }
 
     /**
@@ -49,8 +49,8 @@ public class CorePaymentExecutionPipeline implements PaymentExecutionPipeline {
      */
     @Override
     public PaymentExecutionResult execute(PaymentContext context, RiskAssessment riskAssessment) {
-        Objects.requireNonNull(context, "context must not be null");
-        Objects.requireNonNull(riskAssessment, "riskAssessment must not be null");
+        Objects.requireNonNull(context, "context não pode ser nulo");
+        Objects.requireNonNull(riskAssessment, "riskAssessment não pode ser nulo");
 
         PaymentStrategy strategy = strategyFactory.getStrategy(context.paymentMethod());
         BigDecimal feeAmount = strategy.calculateFee(context).setScale(2, RoundingMode.HALF_EVEN);

@@ -29,7 +29,7 @@ public class LegacyMainframeClient {
      */
     public String transmitPipeFrame(String rawPipePayload) {
         if (rawPipePayload == null || rawPipePayload.isBlank()) {
-            return "ERR|EMPTY_FRAME|Payload must not be blank";
+            return "ERR|EMPTY_FRAME|O payload não pode estar em branco";
         }
 
         String[] fields = rawPipePayload.split("\\|");
@@ -38,7 +38,7 @@ public class LegacyMainframeClient {
         if ("SETTLE".equals(operation) && fields.length == 6) {
             long cents = parsePositiveCents(fields[2]);
             if (cents <= 0) {
-                return "ERR|INVALID_AMOUNT|Amount in cents must be positive";
+                return "ERR|INVALID_AMOUNT|O valor em centavos deve ser positivo";
             }
             String authSuffix = shortDigest(rawPipePayload);
             String channel = resolveLegacyChannel(fields[3]);
@@ -47,17 +47,17 @@ public class LegacyMainframeClient {
 
         if ("REFUND".equals(operation) && fields.length == 3) {
             if (fields[1].isBlank()) {
-                return "ERR|MISSING_AUTH|Authorization code is required for refund";
+                return "ERR|MISSING_AUTH|O código de autorização é obrigatório para estorno";
             }
             long cents = parsePositiveCents(fields[2]);
             if (cents <= 0) {
-                return "ERR|INVALID_AMOUNT|Refund amount in cents must be positive";
+                return "ERR|INVALID_AMOUNT|O valor de estorno em centavos deve ser positivo";
             }
             String revSuffix = shortDigest(rawPipePayload);
             return "OK|REV-" + revSuffix + "|MAINFRAME_REVERSAL";
         }
 
-        return "ERR|MALFORMED_FRAME|Unsupported legacy mainframe command";
+        return "ERR|MALFORMED_FRAME|Comando não suportado pelo mainframe legado";
     }
 
     private long parsePositiveCents(String rawCents) {

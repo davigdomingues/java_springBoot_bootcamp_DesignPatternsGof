@@ -58,7 +58,7 @@ public class CashbackBenefitDecorator extends AbstractPaymentPipelineDecorator {
      * @throws NullPointerException quando {@code context} for nulo
      */
     public static BigDecimal calculateCashback(PaymentContext context) {
-        Objects.requireNonNull(context, "context must not be null");
+        Objects.requireNonNull(context, "context não pode ser nulo");
         return switch (context.customerTier()) {
             case VIP -> context.amount()
                     .multiply(VIP_RATE)

@@ -26,10 +26,10 @@ public record SettlementRequest(
      * @throws NullPointerException quando qualquer atributo do comando de liquidação for nulo
      */
     public SettlementRequest {
-        Objects.requireNonNull(transactionCode, "transactionCode must not be null");
-        Objects.requireNonNull(amount, "amount must not be null");
-        Objects.requireNonNull(paymentMethod, "paymentMethod must not be null");
-        Objects.requireNonNull(payerDocument, "payerDocument must not be null");
-        Objects.requireNonNull(payeeDocument, "payeeDocument must not be null");
+        Objects.requireNonNull(transactionCode, "transactionCode não pode ser nulo");
+        Objects.requireNonNull(amount, "amount não pode ser nulo");
+        Objects.requireNonNull(paymentMethod, "paymentMethod não pode ser nulo");
+        Objects.requireNonNull(payerDocument, "payerDocument não pode ser nulo");
+        Objects.requireNonNull(payeeDocument, "payeeDocument não pode ser nulo");
     }
 }

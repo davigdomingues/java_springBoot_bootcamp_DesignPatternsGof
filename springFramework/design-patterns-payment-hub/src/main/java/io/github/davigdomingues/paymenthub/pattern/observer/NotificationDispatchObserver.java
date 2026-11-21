@@ -30,7 +30,7 @@ public class NotificationDispatchObserver implements PaymentEventObserver {
     public NotificationDispatchObserver(NotificationLogRepository notificationLogRepository) {
         this.notificationLogRepository = Objects.requireNonNull(
                 notificationLogRepository,
-                "notificationLogRepository must not be null"
+                "notificationLogRepository não pode ser nulo"
         );
     }
 
@@ -52,29 +52,29 @@ public class NotificationDispatchObserver implements PaymentEventObserver {
                             event.transactionCode(),
                             "EMAIL",
                             "payer:" + event.payerDocument(),
-                            "Payment blocked by compliance review",
-                            "Transaction " + event.transactionCode() + " was rejected. Details: " + event.details(),
+                            "Pagamento bloqueado pela análise de compliance",
+                            "A transação " + event.transactionCode() + " foi rejeitada. Detalhes: " + event.details(),
                             event.occurredAt()
                     ),
                     new NotificationLog(
                             event.transactionCode(),
                             "FRAUD_ALERT_WEBHOOK",
                             "security-operations@paymenthub.local",
-                            "Compliance block alert: " + event.transactionCode(),
-                            "Blocked " + event.paymentMethod() + " payment of " + event.grossAmount()
-                                    + " for payer " + event.payerDocument() + ". Reason: " + event.details(),
+                            "Alerta de bloqueio de compliance: " + event.transactionCode(),
+                            "Pagamento " + event.paymentMethod() + " de " + event.grossAmount()
+                                    + " bloqueado para o pagador " + event.payerDocument() + ". Motivo: " + event.details(),
                             event.occurredAt()
                     )
             );
         }
 
         String subject = event.status() == PaymentStatus.REFUNDED
-                ? "Payment refunded: " + event.transactionCode()
-                : "Payment update (" + event.status() + "): " + event.transactionCode();
+                ? "Pagamento estornado: " + event.transactionCode()
+                : "Atualização de pagamento (" + event.status() + "): " + event.transactionCode();
 
-        String message = "Transaction " + event.transactionCode()
+        String message = "Transação " + event.transactionCode()
                 + " via " + event.paymentMethod()
-                + " amount " + event.grossAmount()
+                + " valor " + event.grossAmount()
                 + " status " + event.status();
 
         return List.of(

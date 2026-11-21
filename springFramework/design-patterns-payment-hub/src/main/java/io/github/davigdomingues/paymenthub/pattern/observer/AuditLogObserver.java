@@ -24,7 +24,7 @@ public class AuditLogObserver implements PaymentEventObserver {
      * @throws NullPointerException quando {@code auditLogRepository} for nulo
      */
     public AuditLogObserver(PaymentAuditLogRepository auditLogRepository) {
-        this.auditLogRepository = Objects.requireNonNull(auditLogRepository, "auditLogRepository must not be null");
+        this.auditLogRepository = Objects.requireNonNull(auditLogRepository, "auditLogRepository não pode ser nulo");
     }
 
     @Override

@@ -25,7 +25,7 @@ public class LegacyMainframeSettlementAdapter implements ExternalSettlementPort 
     private final LegacyMainframeClient mainframeClient;
 
     public LegacyMainframeSettlementAdapter(LegacyMainframeClient mainframeClient) {
-        this.mainframeClient = Objects.requireNonNull(mainframeClient, "mainframeClient must not be null");
+        this.mainframeClient = Objects.requireNonNull(mainframeClient, "mainframeClient não pode ser nulo");
     }
 
     /**
@@ -37,7 +37,7 @@ public class LegacyMainframeSettlementAdapter implements ExternalSettlementPort 
      */
     @Override
     public SettlementResponse settle(SettlementRequest request) {
-        Objects.requireNonNull(request, "request must not be null");
+        Objects.requireNonNull(request, "request não pode ser nulo");
         long amountInCents = toCents(request.amount());
 
         String frame = String.join(
@@ -64,9 +64,9 @@ public class LegacyMainframeSettlementAdapter implements ExternalSettlementPort 
     @Override
     public SettlementResponse refund(String externalAuthorizationCode, BigDecimal amount) {
         if (externalAuthorizationCode == null || externalAuthorizationCode.isBlank()) {
-            throw new BusinessRuleException("External authorization code is required for refund");
+            throw new BusinessRuleException("O código de autorização externo é obrigatório para estorno");
         }
-        Objects.requireNonNull(amount, "amount must not be null");
+        Objects.requireNonNull(amount, "amount não pode ser nulo");
         long amountInCents = toCents(amount);
 
         String frame = String.join(
@@ -94,7 +94,7 @@ public class LegacyMainframeSettlementAdapter implements ExternalSettlementPort 
 
     private SettlementResponse parseProtocolResponse(String rawResponse) {
         if (rawResponse == null || rawResponse.isBlank()) {
-            throw new BusinessRuleException("Empty response received from legacy mainframe");
+            throw new BusinessRuleException("Resposta vazia recebida do mainframe legado");
         }
 
         String[] parts = rawResponse.split("\\|", 3);
@@ -105,6 +105,6 @@ public class LegacyMainframeSettlementAdapter implements ExternalSettlementPort 
 
         String errorCode = parts.length >= 2 ? parts[1] : "UNKNOWN_ERROR";
         String errorMessage = parts.length == 3 ? parts[2] : rawResponse;
-        throw new BusinessRuleException("Legacy mainframe settlement failed [" + errorCode + "]: " + errorMessage);
+        throw new BusinessRuleException("Falha na liquidação no mainframe legado [" + errorCode + "]: " + errorMessage);
     }
 }

@@ -19,6 +19,6 @@ public abstract class AbstractPaymentPipelineDecorator implements PaymentExecuti
      * @throws NullPointerException quando {@code delegate} for nulo
      */
     protected AbstractPaymentPipelineDecorator(PaymentExecutionPipeline delegate) {
-        this.delegate = Objects.requireNonNull(delegate, "delegate pipeline must not be null");
+        this.delegate = Objects.requireNonNull(delegate, "delegate pipeline não pode ser nulo");
     }
 }
